@@ -1,0 +1,29 @@
+.row
+  %table.table
+    %thead
+      %tr
+        %th Origem
+        %th Destino
+        %th Última verificação
+        %th
+    %tbody
+      - @routes.each do |r|
+        %tr
+          %td
+            %a{:href => "/#{r.id}"}
+              = r.from_name
+          %td
+            %a{:href => "/#{r.id}"}
+              = r.to_name
+          %td= r.checks.count > 0 ? r.checks.maximum('date').strftime('%d/%m/%Y %H:%M') : 'Nunca'
+          %td
+            .btn-group
+              %a.btn.btn-warning{:href => "/edit/#{r.id}"}
+                %i.fa.fa-pencil
+              = link_to 'Excluir', routes_path(r), method: :delete, data: {confirm: 'Tem certeza?'}, class: 'btn btn-danger'
+.row
+  .col-sm-4.col-sm-offset-8.col-md-3.col-md-offset-9.col-lg-2.col-lg-offset-10
+    %a.btn.btn-success{:href => '/routes/new'}
+      %i.fa.fa-plus
+      Incluir Rota
+%br
